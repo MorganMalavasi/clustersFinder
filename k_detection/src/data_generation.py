@@ -57,7 +57,7 @@ def createDatasets():
     sample0, l0, n_dataset0 = create_dataset_base(samples = 5, features = 4, centers = 2, display = False, n_dataset = 0)
     sample1, l1, n_dataset1 = create_dataset_base(samples = 1000, features = 30, centers = 2, display = False, n_dataset = 1)
     sample2, l2, n_dataset2 = create_dataset_base(samples = 4000, features = 7, centers = 10, display = False, n_dataset = 2)
-    sample3, l3, n_dataset3 = create_dataset_base(samples = 7000, features = 15, centers = 8, display = False, n_dataset = 3)
+    sample3, l3, n_dataset3 = create_dataset_base(samples = 7000, features = 15, centers = 8, standard_deviation_cluster=0.5, display = False, n_dataset = 3)
     sample4, l4, n_dataset4 = create_dataset_base(samples = 10000, features = 1024, centers = 5, display = False, n_dataset = 4)
     sample5, l5, n_dataset5 = create_dataset_base(samples = 13000, features = 1024, centers = 5, display = False, n_dataset = 5)
     sample6, l6, n_dataset6 = create_dataset_base(samples = 15000, features = 2048, centers = 5, display = False, n_dataset = 6)
