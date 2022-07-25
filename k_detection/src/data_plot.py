@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
 import plotly.express as px
 from sklearn.decomposition import PCA
@@ -168,19 +169,8 @@ def smooth(x, window_len=11, window='hanning'):
     y = np.convolve(w/w.sum(),s,mode='valid')
     return y
 
-def histogram(theta, nbins=None, verb=True):
-    if nbins is None:
-        nbins = len(theta)
-    # Return evenly spaced numbers over a specified interval.
-    # start = 0
-    # stop = 2*PI
-    # nbins = Number of samples to generate
-    binsLIM = np.linspace(0,2*np.pi,nbins)
-    hist, bins = np.histogram(theta, binsLIM)
-    return hist, bins 
+def plot_scatter(hist, bins, mode=0, smooth_wlen=None):
 
-def plot_hist(hist, bins, mode=0, smooth_wlen=None):
-  
     if mode==0:
         mode_line = 'lines'
     elif mode == 1:
@@ -193,3 +183,20 @@ def plot_hist(hist, bins, mode=0, smooth_wlen=None):
 
     figh = go.Figure(data=go.Scatter(x=bins, y=hist, mode=mode_line))
     figh.show()
+
+def plot_hist(hist, bins):
+
+    size = hist.shape[0]
+    samplesInHistogram = np.empty([size, 2])
+    for i in range(size):
+        samplesInHistogram[i] = [bins[i], hist[i]]
+
+    df = pd.DataFrame(samplesInHistogram, columns=['bin', 'height'])
+
+    fig = px.histogram(df, x="bin", y="height", nbins=bins.shape[0])
+    fig.show()
+    # print 
+    
+    # print(samplesInHistogram)
+    # figh = px.histogram(samplesInHistogram)
+    # figh.show()
