@@ -192,7 +192,6 @@ def plot_hist(hist, bins):
         samplesInHistogram[i] = [bins[i], hist[i]]
 
     df = pd.DataFrame(samplesInHistogram, columns=['bin', 'height'])
-    print(type(df))
     fig = px.histogram(df, x="bin", y="height", nbins=bins.shape[0])
     fig.show()
     # print 

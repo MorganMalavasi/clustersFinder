@@ -29,21 +29,20 @@ theta = cc.loop(matrixOfWeights, theta, S, C, 0.001)
 data_plot.doPCA(samples, labels, n_dataset)
 data_plot.plot_circle(theta, labels)
 
-hist, bins = utility.histogram(theta, nbins=512)
+hist, bins = utility.histogram(theta, nbins=128)
 
 # Plot the histogram
 data_plot.plot_scatter(hist, bins, mode=2)
 data_plot.plot_hist(hist, bins)
-
 # smoothing 
 # smooth values with average of ten values
 # we are interested in the hist values because they represent the values to divide
 hist_smoothed_weighted = smoothing_detection.smooth_weighted(hist)
+data_plot.plot_scatter(hist_smoothed_weighted, bins, mode=2)
 data_plot.plot_hist(hist_smoothed_weighted, bins)
 
 # new algorithm for counting the number of clusters in an histogram density base view
-print("create hierarchical tree")
-n = histogram_clustering_hierarchical.getClustersFromHistogram(hist_smoothed_weighted, bins)
+n = histogram_clustering_hierarchical.getClustersFromHistogram(hist, bins)
 
 
 
