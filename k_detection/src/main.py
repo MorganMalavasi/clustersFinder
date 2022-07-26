@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 import cclustering_cpu as cc
 import data_generation
 import data_plot
-import smoothing_detection
-import utility
+import smoothing_detection, utility, histogram_clustering_hierarchical
 
 plt.style.use('ggplot')
 
@@ -43,7 +42,8 @@ hist_smoothed_weighted = smoothing_detection.smooth_weighted(hist)
 data_plot.plot_hist(hist_smoothed_weighted, bins)
 
 # new algorithm for counting the number of clusters in an histogram density base view
-
+print("create hierarchical tree")
+n = histogram_clustering_hierarchical.getClustersFromHistogram(hist_smoothed_weighted, bins)
 
 
 
