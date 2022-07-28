@@ -7,6 +7,6 @@ def histogram(theta, nbins=None, verb=True):
     # start = 0
     # stop = 2*PI
     # nbins = Number of samples to generate
-    binsLIM = np.linspace(0,2*np.pi,nbins)
-    hist, bins = np.histogram(theta, binsLIM)
-    return hist, bins 
+    bins = np.linspace(0,2*np.pi,nbins)
+    h, b = np.histogram(theta, bins)
+    return h, b

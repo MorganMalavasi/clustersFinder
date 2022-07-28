@@ -1,6 +1,7 @@
 import numpy as np
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import cluster
 import cclustering_cpu as cc
 import data_generation
 import data_plot
@@ -34,16 +35,28 @@ hist, bins = utility.histogram(theta, nbins=128)
 # Plot the histogram
 data_plot.plot_scatter(hist, bins, mode=2)
 data_plot.plot_hist(hist, bins)
+# remove 10% of the noise in the data
+maxHeight = max(hist)
+maxHeight_5_percent = maxHeight / 20 
+for i in range(hist.shape[0]):
+    if hist[i] < maxHeight_5_percent:
+        hist[i] = 0
+
+data_plot.plot_scatter(hist, bins, mode=2)
+data_plot.plot_hist(hist, bins)
+
+'''
 # smoothing 
 # smooth values with average of ten values
 # we are interested in the hist values because they represent the values to divide
 hist_smoothed_weighted = smoothing_detection.smooth_weighted(hist)
 data_plot.plot_scatter(hist_smoothed_weighted, bins, mode=2)
 data_plot.plot_hist(hist_smoothed_weighted, bins)
+'''
 
 # new algorithm for counting the number of clusters in an histogram density base view
-n = histogram_clustering_hierarchical.getClustersFromHistogram(hist, bins)
-
+clusters = histogram_clustering_hierarchical.getClustersFromHistogram(hist, bins)
+print(clusters)
 
 
 
@@ -51,7 +64,7 @@ n = histogram_clustering_hierarchical.getClustersFromHistogram(hist, bins)
 
 """
 
-# commputing histogram values in 512 bins
+# computing histogram values in 512 bins
 hist, bins = data_plot.histogram(theta, nbins=512)
 data_plot.plot_hist(hist, bins, mode=2)
 

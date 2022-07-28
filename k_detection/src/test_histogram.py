@@ -10,3 +10,4 @@ print(bins)
 
 # data_plot.plot_hist(height, bins)
 n = histogram_clustering_hierarchical.getClustersFromHistogram(height, bins)
+print(n)
