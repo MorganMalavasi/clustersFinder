@@ -54,9 +54,12 @@ data_plot.plot_scatter(hist_smoothed_weighted, bins, mode=2)
 data_plot.plot_hist(hist_smoothed_weighted, bins)
 '''
 
-# new algorithm for counting the number of clusters in an histogram density base view
+# new algorithm for counting the number of clusters in an histogram of densities
 clusters = histogram_clustering_hierarchical.getClustersFromHistogram(hist, bins)
+thetaLabels = histogram_clustering_hierarchical.labelTheSamples(samples, theta, clusters, bins)
 print(clusters)
+
+data_plot.plot_circle(theta, thetaLabels)
 
 
 

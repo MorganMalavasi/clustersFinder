@@ -1,6 +1,8 @@
+from random import sample
 import numpy as np
 from anytree import AnyNode
 from anytree.exporter import DotExporter
+import sys
 
 
 def getClustersFromHistogram(heights, nbins):
@@ -13,7 +15,7 @@ def getClustersFromHistogram(heights, nbins):
     DotExporter(tree).to_picture("tree.png")
 
     detectClusters(tree)        
-    newTree = createTreeOfClusters(tree, nbins.shape[0])
+    newTree = createTreeOfClusters(tree, nbins.shape[0]-1)
     DotExporter(newTree).to_picture("clusters.png")
     
     # each cluster is a tuple that indicates the number of the cluster and the interval of membership
@@ -58,7 +60,7 @@ def addToParent(parents, interval, area, maxLength):
 
 def createHierarchicalTree(heights, nbins):
 
-    tree = AnyNode(name="0", interval = (0.0, nbins.shape[0]), area = 0.0, clusters = 0)
+    tree = AnyNode(name="0", interval = (0.0, nbins.shape[0]-1), area = 0.0, clusters = 0)
     
     parents = []
     parents.append(tree)
@@ -73,6 +75,7 @@ def createHierarchicalTree(heights, nbins):
             while j < (nbins.shape[0]-1): 
                 if heights[j] >= checkHeight:
                     start = j
+                    end = nbins.shape[0]-1
                     while j < (nbins.shape[0]-1) and heights[j] >= checkHeight:
                         j = j+1
                         end = j
@@ -187,8 +190,8 @@ def searchClusters(tree):
 
         # if it hasn't children it means it is a leaf (a cluster)
         if len(currentNode.children) == 0:
-            counterClusters += 1
             clusters.append((counterClusters, currentNode.interval))
+            counterClusters += 1
 
         # put children on the stack
         children = currentNode.children
@@ -197,6 +200,34 @@ def searchClusters(tree):
 
     return clusters
     
+
+
+def labelTheSamples(samples, theta, clusters, bins):
+    
+    label = np.empty(samples.shape[0])
+    
+    for i in range(theta.shape[0]):
+        value = theta[i]
+        distance = sys.maxsize
+        labelFound = None
+
+        for j in range(len(clusters)):
+            cluster = clusters[j]
+            
+            nr_cluster = cluster[0]
+            intervalIndex = cluster[1]
+
+            distanceX = abs(value - bins[intervalIndex[0]])
+            distanceY = abs(value - bins[intervalIndex[1]])
+            minDistance = min(distanceX, distanceY)
+
+            if minDistance < distance:
+                distance = minDistance
+                labelFound = nr_cluster
+        
+        label[i] = labelFound
+        
+    return label
 
 '''
 def searchClusters(tree):
