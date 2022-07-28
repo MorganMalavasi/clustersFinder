@@ -5,7 +5,7 @@ from sklearn import cluster
 import cclustering_cpu as cc
 import data_generation
 import data_plot
-import smoothing_detection, utility, histogram_clustering_hierarchical
+import smoothing_detection, utility, histogram_clustering_hierarchical, silhouette
 
 plt.style.use('ggplot')
 
@@ -57,7 +57,6 @@ data_plot.plot_hist(hist_smoothed_weighted, bins)
 # new algorithm for counting the number of clusters in an histogram of densities
 clusters = histogram_clustering_hierarchical.getClustersFromHistogram(hist, bins)
 thetaLabels = histogram_clustering_hierarchical.labelTheSamples(samples, theta, clusters, bins)
-print(clusters)
 
 data_plot.plot_circle(theta, thetaLabels)
 
@@ -96,7 +95,7 @@ nClusters, weights = smoothing_detection.simple_detection(hist_smoothed_weighted
 print("there are {0} smoothed clusters with weights".format(nClusters))
 
 
-
+"""
 
 '''
 K-MEANS
@@ -104,10 +103,16 @@ In K-means clustering, we don't know the correct number of clusters, so we make 
 the one who suites better.
 Here, we have the correct number, that we can get from the labels, so we will use it here.
 '''
-print("Computing clustering k-means with help")
-kmeans_with_help = cluster.KMeans(n_clusters=max(labels)).fit(samples)
-print("Computing clustering k-means without help")
-kmeans_without_help = cluster.KMeans().fit(samples)
+print("******************************************")
+print("******************************************")
+print("******************************************")
+
+print("Computing silhouette in k-means knowing correct number of clusters")
+correctNumberOfClusters = max(labels) + 1
+silhouette.k_means_silhouette_nrClusters_defined(correctNumberOfClusters, samples)
+print("Computing silhouette in k-means without knowing correct number of clusters")
+silhouette.k_means_silhouette(samples)
+print("Computing silhouette in circleClustering")
+silhouette.circleClustering_silhouette(samples, thetaLabels)
 
 
-"""
