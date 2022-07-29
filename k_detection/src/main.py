@@ -5,7 +5,8 @@ from sklearn import cluster
 import cclustering_cpu as cc
 import data_generation
 import data_plot
-import smoothing_detection, utility, histogram_clustering_hierarchical, silhouette
+import smoothing_detection, utility, histogram_clustering_hierarchical
+from analysis.analysis_alg import internal_analysis
 
 plt.style.use('ggplot')
 
@@ -103,16 +104,30 @@ In K-means clustering, we don't know the correct number of clusters, so we make 
 the one who suites better.
 Here, we have the correct number, that we can get from the labels, so we will use it here.
 '''
+
+internalAnalysis = internal_analysis()
+correctNumberOfClusters = max(labels) + 1
+
 print("******************************************")
-print("******************************************")
+print("****** silhouette index*******************")
 print("******************************************")
 
 print("Computing silhouette in k-means knowing correct number of clusters")
-correctNumberOfClusters = max(labels) + 1
-silhouette.k_means_silhouette_nrClusters_defined(correctNumberOfClusters, samples)
+internalAnalysis.k_means_silhouette_nrClusters_defined(correctNumberOfClusters, samples)
 print("Computing silhouette in k-means without knowing correct number of clusters")
-silhouette.k_means_silhouette(samples)
+internalAnalysis.k_means_silhouette(samples)
 print("Computing silhouette in circleClustering")
-silhouette.circleClustering_silhouette(samples, thetaLabels)
+internalAnalysis.circleClustering_silhouette(samples, thetaLabels)
+
+print("******************************************")
+print("****** Calinski - Harabasz ***************")
+print("******************************************")
+
+print("Computing Calinski - Harabasz in k-means knowing correct number of clusters")
+internalAnalysis.k_means_calinski_harabasz_nrClusters_defined(correctNumberOfClusters, samples)
+print("Computing Calinski - Harabasz in k-means without knowing correct number of clusters")
+internalAnalysis.k_means_calinski_harabasz(samples)
+print("Computing Calinski - Harabasz in circleClustering")
+internalAnalysis.circleClustering_calinski_harabasz(samples, thetaLabels)
 
 
