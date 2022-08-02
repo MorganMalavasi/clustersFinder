@@ -81,6 +81,7 @@ def createHierarchicalTree(heights, nbins):
                         end = j
                     # add a new node
                     interval = (start, end)
+                    # TODO -> the height is not correct, because is total and we need the cut 
                     area = (end - start) * listOfheightsToCheck[i]
                     addToParent(parents, interval, area, nbins.shape[0])
                 else: 
@@ -203,7 +204,7 @@ def searchClusters(tree):
 
 
 def labelTheSamples(samples, theta, clusters, bins):
-    
+    # TODO -> rivedere, c'è qualche errore nella vicinanza perchè a volte punti vicini sono labellizati in modo sbagliato 
     label = np.empty(samples.shape[0])
     
     for i in range(theta.shape[0]):

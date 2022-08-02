@@ -8,6 +8,7 @@ import data_plot
 import smoothing_detection, utility, histogram_clustering_hierarchical
 from analysis.analysis_alg import internal_analysis
 
+
 plt.style.use('ggplot')
 
 # constants
@@ -130,4 +131,13 @@ internalAnalysis.k_means_calinski_harabasz(samples)
 print("Computing Calinski - Harabasz in circleClustering")
 internalAnalysis.circleClustering_calinski_harabasz(samples, thetaLabels)
 
+print("******************************************")
+print("****** Dunn Index ************************")
+print("******************************************")
 
+print("Computing Dunn Index in k-means knowing correct number of clusters")
+internalAnalysis.k_means_dunn_nrClusters_defined(nr_clusters=correctNumberOfClusters, data=samples)
+print("Computing Dunn Index in k-means without knowing correct number of clusters")
+internalAnalysis.k_means_dunn(samples)
+print("Computing Dunn Index in circleClustering")
+internalAnalysis.circleClustering_dunn(samples, thetaLabels)
