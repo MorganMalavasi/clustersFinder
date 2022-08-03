@@ -1,7 +1,6 @@
 import numpy as np
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn import cluster
 import cclustering_cpu as cc
 import data_generation
 import data_plot
@@ -29,14 +28,14 @@ matrixOfWeights, S, C = cc.computing_weights(samples, theta)
 print("Computing the loop...")
 theta = cc.loop(matrixOfWeights, theta, S, C, 0.001)
 
-data_plot.doPCA(samples, labels, n_dataset)
-data_plot.plot_circle(theta, labels)
+# data_plot.doPCA(samples, labels, n_dataset)
+# data_plot.plot_circle(theta, labels)
 
 hist, bins = utility.histogram(theta, nbins=128)
 
 # Plot the histogram
-data_plot.plot_scatter(hist, bins, mode=2)
-data_plot.plot_hist(hist, bins)
+# data_plot.plot_scatter(hist, bins, mode=2)
+# data_plot.plot_hist(hist, bins)
 # remove 10% of the noise in the data
 maxHeight = max(hist)
 maxHeight_5_percent = maxHeight / 20 
@@ -44,8 +43,8 @@ for i in range(hist.shape[0]):
     if hist[i] < maxHeight_5_percent:
         hist[i] = 0
 
-data_plot.plot_scatter(hist, bins, mode=2)
-data_plot.plot_hist(hist, bins)
+# data_plot.plot_scatter(hist, bins, mode=2)
+# data_plot.plot_hist(hist, bins)
 
 '''
 # smoothing 
@@ -60,7 +59,7 @@ data_plot.plot_hist(hist_smoothed_weighted, bins)
 clusters = histogram_clustering_hierarchical.getClustersFromHistogram(hist, bins)
 thetaLabels = histogram_clustering_hierarchical.labelTheSamples(samples, theta, clusters, bins)
 
-data_plot.plot_circle(theta, thetaLabels)
+# data_plot.plot_circle(theta, thetaLabels)
 
 
 
@@ -109,9 +108,9 @@ Here, we have the correct number, that we can get from the labels, so we will us
 internalAnalysis = internal_analysis()
 correctNumberOfClusters = max(labels) + 1
 
-print("******************************************")
-print("****** silhouette index*******************")
-print("******************************************")
+print("**********************************************************************")
+print("****** silhouette index **********************************************")
+print("**********************************************************************")
 
 print("Computing silhouette in k-means knowing correct number of clusters")
 internalAnalysis.k_means_silhouette_nrClusters_defined(correctNumberOfClusters, samples)
@@ -120,9 +119,9 @@ internalAnalysis.k_means_silhouette(samples)
 print("Computing silhouette in circleClustering")
 internalAnalysis.circleClustering_silhouette(samples, thetaLabels)
 
-print("******************************************")
-print("****** Calinski - Harabasz ***************")
-print("******************************************")
+print("**********************************************************************")
+print("****** Calinski - Harabasz *******************************************")
+print("**********************************************************************")
 
 print("Computing Calinski - Harabasz in k-means knowing correct number of clusters")
 internalAnalysis.k_means_calinski_harabasz_nrClusters_defined(correctNumberOfClusters, samples)
@@ -131,9 +130,9 @@ internalAnalysis.k_means_calinski_harabasz(samples)
 print("Computing Calinski - Harabasz in circleClustering")
 internalAnalysis.circleClustering_calinski_harabasz(samples, thetaLabels)
 
-print("******************************************")
-print("****** Dunn Index ************************")
-print("******************************************")
+print("**********************************************************************")
+print("****** Dunn Index ****************************************************")
+print("**********************************************************************")
 
 print("Computing Dunn Index in k-means knowing correct number of clusters")
 internalAnalysis.k_means_dunn_nrClusters_defined(nr_clusters=correctNumberOfClusters, data=samples)
@@ -141,3 +140,14 @@ print("Computing Dunn Index in k-means without knowing correct number of cluster
 internalAnalysis.k_means_dunn(samples)
 print("Computing Dunn Index in circleClustering")
 internalAnalysis.circleClustering_dunn(samples, thetaLabels)
+
+print("**********************************************************************")
+print("****** Average within-cluster dissimilarities ************************")
+print("**********************************************************************")
+
+print("Computing Average within-cluster dissimilarities in k-means knowing correct number of clusters")
+internalAnalysis.k_means_average_within_cluster_dissimilarities_nrClusters_defined(nr_clusters = correctNumberOfClusters, data = samples)
+print("Computing Average within-cluster dissimilarities in k-means without knowing correct number of clusters")
+internalAnalysis.k_means_average_within_cluster_dissimilarities(samples)
+print("Computing Average within-cluster dissimilarities in circleClustering")
+internalAnalysis.circleClustering_average_within_cluster_dissimilarities(samples, thetaLabels)
