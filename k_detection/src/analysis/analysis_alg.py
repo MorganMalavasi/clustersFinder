@@ -1,8 +1,10 @@
 import sys
 from analysis.base_dunn import dunn_fast
 from analysis.average_within_cluster_dissimilarities import average_within_cluster_dissimilarities
+from analysis.separation_index import separationindex
 from sklearn import metrics
 from sklearn.cluster import KMeans
+from scipy.spatial.distance import euclidean
 
 
 class internal_analysis:
@@ -127,25 +129,6 @@ class internal_analysis:
 
     # ************************* average within-cluster dissimilarities **********
     def k_means_average_within_cluster_dissimilarities_nrClusters_defined(self, nr_clusters, data):
-        '''
-        SLOW VERSION 
-
-        # K-Means
-        df = pd.DataFrame(data)
-        k_means_ = KMeans(n_clusters=nr_clusters)
-        k_means_.fit(df)
-        y_pred = k_means_.predict(df)
-
-        prediction = pd.concat([df, pd.DataFrame(y_pred, columns=['pred'])], axis = 1)
-
-        k_list = []
-        for i in range(nr_clusters):
-            clus = prediction.loc[prediction.pred == i]
-            k_list.append(clus.values)
-
-        print(dunn_fast(k_list))
-        '''
-
         if self.kMeans_ == None:
             self.kMeans_ = self.k_means_nrClusters(numberK = nr_clusters, samples = data)
         # compute silhoutte score 
@@ -153,7 +136,7 @@ class internal_analysis:
         print(score)
         
     def k_means_average_within_cluster_dissimilarities(self, data):
-        maxScore = -(sys.maxsize)
+        maxScore = sys.maxsize
         clusters = -1
         
         if self.kMeans_list == None:
@@ -162,7 +145,7 @@ class internal_analysis:
         for i in range(len(self.kMeans_list)):
             score = average_within_cluster_dissimilarities(data, self.kMeans_list[i].labels_)
         
-            if score > maxScore:
+            if score < maxScore:
                 maxScore = score
                 clusters = max(self.kMeans_list[i].labels_) + 1
         
@@ -173,3 +156,12 @@ class internal_analysis:
     def circleClustering_average_within_cluster_dissimilarities(self, data, labels_):
         score = average_within_cluster_dissimilarities(data, labels_)
         print(score)
+
+    # ************************* separation index *******************************
+    def k_means_separation_index_nrClusters_defined(self, nr_clusters, data):
+        if self.kMeans_ == None:
+            self.kMeans_ = self.k_means_nrClusters(numberK = nr_clusters, samples = data)
+        # compute silhoutte score 
+        score = separationindex(data, self.kMeans_.labels_)
+        print(score)
+

@@ -151,3 +151,11 @@ print("Computing Average within-cluster dissimilarities in k-means without knowi
 internalAnalysis.k_means_average_within_cluster_dissimilarities(samples)
 print("Computing Average within-cluster dissimilarities in circleClustering")
 internalAnalysis.circleClustering_average_within_cluster_dissimilarities(samples, thetaLabels)
+
+print("**********************************************************************")
+print("****** Separation Index **********************************************")
+print("**********************************************************************")
+
+print("Computing Separation Index in k-means knowing correct number of clusters")
+internalAnalysis.k_means_separation_index_nrClusters_defined(nr_clusters = correctNumberOfClusters, data = samples)
+

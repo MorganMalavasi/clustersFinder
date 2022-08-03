@@ -1,12 +1,6 @@
 import numpy as np
 from sklearn.metrics.pairwise import euclidean_distances
-
-def counterFinder(findMe, labels, data):
-    cluster = []
-    for j in range(labels.shape[0]):
-        if labels[j] == findMe:
-            cluster.append(data[j])
-    return cluster
+from analysis.utils import clusterFinder
 
 def sumDiss(matrix):
     sum = 0
@@ -20,7 +14,7 @@ def average_within_cluster_dissimilarities(data, labels):
     maxLabel = int(max(labels))
     total = 0
     for i in range(maxLabel):
-        cls = counterFinder(i, labels, data)
+        cls = clusterFinder(i, labels, data)
         cluster_array = np.asarray(cls)
 
         matrixOfDistances = euclidean_distances(cluster_array, cluster_array)
