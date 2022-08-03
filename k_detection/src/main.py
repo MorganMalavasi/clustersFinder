@@ -158,4 +158,8 @@ print("**********************************************************************")
 
 print("Computing Separation Index in k-means knowing correct number of clusters")
 internalAnalysis.k_means_separation_index_nrClusters_defined(nr_clusters = correctNumberOfClusters, data = samples)
+print("Computing Separation Index in k-means without knowing correct number of clusters")
+internalAnalysis.k_means_separation_index(samples)
+print("Computing Separation Index in circleClustering")
+internalAnalysis.circleClustering_separation_index(samples, thetaLabels)
 

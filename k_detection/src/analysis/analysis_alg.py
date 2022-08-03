@@ -4,7 +4,6 @@ from analysis.average_within_cluster_dissimilarities import average_within_clust
 from analysis.separation_index import separationindex
 from sklearn import metrics
 from sklearn.cluster import KMeans
-from scipy.spatial.distance import euclidean
 
 
 class internal_analysis:
@@ -165,3 +164,22 @@ class internal_analysis:
         score = separationindex(data, self.kMeans_.labels_)
         print(score)
 
+    def k_means_separation_index(self, data):
+        maxScore = -(sys.maxsize)
+        clusters = -1
+        
+        if self.kMeans_list == None:
+            self.k_means_array(data)
+
+        for i in range(len(self.kMeans_list)):
+            score = separationindex(data, self.kMeans_list[i].labels_)
+        
+            if score > maxScore:
+                maxScore = score
+                clusters = max(self.kMeans_list[i].labels_) + 1
+        
+        print("score = {0}, nr clusters = {1}".format(maxScore, clusters))
+                
+    def circleClustering_separation_index(self, data, labels_):
+        score = separationindex(data, labels_)
+        print(score)
