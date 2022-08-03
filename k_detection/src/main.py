@@ -108,6 +108,8 @@ Here, we have the correct number, that we can get from the labels, so we will us
 internalAnalysis = internal_analysis()
 correctNumberOfClusters = max(labels) + 1
 
+'''
+
 print("**********************************************************************")
 print("****** silhouette index **********************************************")
 print("**********************************************************************")
@@ -162,4 +164,13 @@ print("Computing Separation Index in k-means without knowing correct number of c
 internalAnalysis.k_means_separation_index(samples)
 print("Computing Separation Index in circleClustering")
 internalAnalysis.circleClustering_separation_index(samples, thetaLabels)
+
+print("**********************************************************************")
+print("****** Entropy *******************************************************")
+print("**********************************************************************")
+
+'''
+
+print("Computing Uniformity of cluster sizes in k-means knowing correct number of clusters")
+internalAnalysis.k_means_entropy_nrClusters_defined(correctNumberOfClusters, samples)
 

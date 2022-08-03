@@ -2,6 +2,7 @@ import sys
 from analysis.base_dunn import dunn_fast
 from analysis.average_within_cluster_dissimilarities import average_within_cluster_dissimilarities
 from analysis.separation_index import separationindex
+from analysis.uniformity_of_cluster_size import entropy
 from sklearn import metrics
 from sklearn.cluster import KMeans
 
@@ -182,4 +183,12 @@ class internal_analysis:
                 
     def circleClustering_separation_index(self, data, labels_):
         score = separationindex(data, labels_)
+        print(score)
+
+    # ************************* entropy ***************************************
+    def k_means_entropy_nrClusters_defined(self, nr_clusters, data):
+        if self.kMeans_ == None:
+            self.kMeans_ = self.k_means_nrClusters(numberK = nr_clusters, samples = data)
+        # compute silhoutte score 
+        score = entropy(data, self.kMeans_.labels_)
         print(score)
