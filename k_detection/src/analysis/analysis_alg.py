@@ -1,8 +1,10 @@
 import sys
 from analysis.base_dunn import dunn_fast
+from analysis.pearson import pearson_index
 from analysis.average_within_cluster_dissimilarities import average_within_cluster_dissimilarities
 from analysis.separation_index import separationindex
 from analysis.uniformity_of_cluster_size import entropy
+from analysis.widest_within_cluster_gap import minimum_spanning_tree
 from sklearn import metrics
 from sklearn.cluster import KMeans
 
@@ -127,6 +129,34 @@ class internal_analysis:
         score = dunn_fast(points = data, labels = labels_)
         print(score)
 
+    # ************************* pearson index ************************************
+    def k_means_pearson_nrClusters_defined(self, nr_clusters, data, matrixOfDissimilarities):
+        if self.kMeans_ == None:
+            self.kMeans_ = self.k_means_nrClusters(numberK = nr_clusters, samples = data)
+        # compute silhoutte score 
+        score = pearson_index(data, self.kMeans_.labels_, matrixOfDissimilarities)
+        print(score)
+        
+    def k_means_pearson(self, data, matrixOfDissimilarities):
+        maxScore = -(sys.maxsize)
+        clusters = -1
+        
+        if self.kMeans_list == None:
+            self.k_means_array(data)
+
+        for i in range(len(self.kMeans_list)):
+            score = pearson_index(data, self.kMeans_list[i].labels_, matrixOfDissimilarities)
+        
+            if score > maxScore:
+                maxScore = score
+                clusters = max(self.kMeans_list[i].labels_) + 1
+        
+        print("score = {0}, nr clusters = {1}".format(maxScore, clusters))
+                
+    def circleClustering_pearson(self, data, labels_, matrixOfDissimilarities):
+        score = pearson_index(data, labels_, matrixOfDissimilarities)
+        print(score)
+
     # ************************* average within-cluster dissimilarities **********
     def k_means_average_within_cluster_dissimilarities_nrClusters_defined(self, nr_clusters, data):
         if self.kMeans_ == None:
@@ -191,4 +221,32 @@ class internal_analysis:
             self.kMeans_ = self.k_means_nrClusters(numberK = nr_clusters, samples = data)
         # compute silhoutte score 
         score = entropy(data, self.kMeans_.labels_)
+        print(score)
+
+    def k_means_entropy(self, data):
+        maxScore = -(sys.maxsize)
+        clusters = -1
+        
+        if self.kMeans_list == None:
+            self.k_means_array(data)
+
+        for i in range(len(self.kMeans_list)):
+            score = entropy(data, self.kMeans_list[i].labels_)
+        
+            if score > maxScore:
+                maxScore = score
+                clusters = max(self.kMeans_list[i].labels_) + 1
+        
+        print("score = {0}, nr clusters = {1}".format(maxScore, clusters))
+                
+    def circleClustering_entropy(self, data, labels_):
+        score = entropy(data, labels_)
+        print(score)
+
+    # ************************* widest within cluster gap ********************
+    def k_means_wwcg_nrClusters_defined(self, nr_clusters, data):
+        if self.kMeans_ == None:
+            self.kMeans_ = self.k_means_nrClusters(numberK = nr_clusters, samples = data)
+        # compute silhoutte score 
+        score = minimum_spanning_tree(data, self.kMeans_.labels_)
         print(score)

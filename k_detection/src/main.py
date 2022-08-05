@@ -108,8 +108,8 @@ Here, we have the correct number, that we can get from the labels, so we will us
 internalAnalysis = internal_analysis()
 correctNumberOfClusters = max(labels) + 1
 
-'''
 
+'''
 print("**********************************************************************")
 print("****** silhouette index **********************************************")
 print("**********************************************************************")
@@ -144,6 +144,17 @@ print("Computing Dunn Index in circleClustering")
 internalAnalysis.circleClustering_dunn(samples, thetaLabels)
 
 print("**********************************************************************")
+print("****** Pearson Index ****************************************************")
+print("**********************************************************************")
+
+print("Computing pearson Index in k-means knowing correct number of clusters")
+internalAnalysis.k_means_pearson_nrClusters_defined(correctNumberOfClusters, samples, matrixOfWeights)
+print("Computing pearson Index in k-means without knowing correct number of clusters")
+internalAnalysis.k_means_pearson(samples, matrixOfWeights)
+print("Computing pearson Index in circleClustering")
+internalAnalysis.circleClustering_pearson(samples, thetaLabels, matrixOfWeights)
+
+print("**********************************************************************")
 print("****** Average within-cluster dissimilarities ************************")
 print("**********************************************************************")
 
@@ -169,8 +180,18 @@ print("**********************************************************************")
 print("****** Entropy *******************************************************")
 print("**********************************************************************")
 
-'''
-
 print("Computing Uniformity of cluster sizes in k-means knowing correct number of clusters")
 internalAnalysis.k_means_entropy_nrClusters_defined(correctNumberOfClusters, samples)
+print("Computing Uniformity of cluster sizes in k-means without knowing correct number of clusters")
+internalAnalysis.k_means_entropy(samples)
+print("Computing Uniformity of cluster sizes in circleClustering")
+internalAnalysis.circleClustering_entropy(samples, thetaLabels)
 
+'''
+
+print("**********************************************************************")
+print("****** widest within-cluster gap *************************************")
+print("**********************************************************************")
+
+print("Computing widest within cluster gap in k-means knowing correct number of clusters")
+internalAnalysis.k_means_wwcg_nrClusters_defined(correctNumberOfClusters, samples)
