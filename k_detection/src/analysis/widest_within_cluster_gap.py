@@ -1,8 +1,11 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from analysis.utils import clusterFinder
 from sklearn.metrics.pairwise import euclidean_distances
 import networkx as nx
+import pandas as pd
+import subprocess
 
 def average(list_):
     sum = 0.0
@@ -75,3 +78,38 @@ def minimum_spanning_tree(samples, labels):
         averagePaths.append(max(maximumPaths))
 
     return average(averagePaths)
+
+def wwcg(samples, labels, matrixOfDissimilarities):
+    # Defining the R script and loading the instance in Python
+    test()
+
+    return 
+
+def test():
+    command = 'Rscript'
+    # command = 'Rscript'                    # OR WITH bin FOLDER IN PATH ENV VAR 
+    arg = '--vanilla' 
+
+    try: 
+        p = subprocess.Popen([command, arg,
+                            "analysis/test.R"],
+                            cwd = os.getcwd(),
+                            stdin = subprocess.PIPE, 
+                            stdout = subprocess.PIPE, 
+                            stderr = subprocess.PIPE) 
+
+        output, error = p.communicate() 
+
+        if p.returncode == 0: 
+            print('R OUTPUT:\n {0}'.format(output.decode("utf-8"))) 
+            print()
+        else: 
+            print('R ERROR:\n {0}'.format(error.decode("utf-8"))) 
+
+        return True
+
+    except Exception as e: 
+        print("dbc2csv - Error converting file: ") 
+        print(e)
+
+        return False

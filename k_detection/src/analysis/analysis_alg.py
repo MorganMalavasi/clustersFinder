@@ -1,10 +1,11 @@
+from cProfile import label
 import sys
 from analysis.base_dunn import dunn_fast
 from analysis.pearson import pearson_index
 from analysis.average_within_cluster_dissimilarities import average_within_cluster_dissimilarities
 from analysis.separation_index import separationindex
 from analysis.uniformity_of_cluster_size import entropy
-from analysis.widest_within_cluster_gap import minimum_spanning_tree
+from analysis.widest_within_cluster_gap import minimum_spanning_tree, wwcg
 from sklearn import metrics
 from sklearn.cluster import KMeans
 
@@ -244,9 +245,10 @@ class internal_analysis:
         print(score)
 
     # ************************* widest within cluster gap ********************
-    def k_means_wwcg_nrClusters_defined(self, nr_clusters, data):
+    def k_means_wwcg_nrClusters_defined(self, nr_clusters, data, matrixOfDissimilarities):
         if self.kMeans_ == None:
             self.kMeans_ = self.k_means_nrClusters(numberK = nr_clusters, samples = data)
         # compute silhoutte score 
-        score = minimum_spanning_tree(data, self.kMeans_.labels_)
-        print(score)
+        # score = minimum_spanning_tree(data, self.kMeans_.labels_)
+        wwcg(data, self.kMeans_.labels_, matrixOfDissimilarities)
+        # print(score)
