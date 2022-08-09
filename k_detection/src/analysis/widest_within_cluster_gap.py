@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from analysis.utils import clusterFinder
+from analysis.utils import clusterFinder, createFile
 from sklearn.metrics.pairwise import euclidean_distances
 import networkx as nx
 import pandas as pd
@@ -79,8 +79,9 @@ def minimum_spanning_tree(samples, labels):
 
     return average(averagePaths)
 
-def wwcg(samples, labels, matrixOfDissimilarities):
+def wwcg(samples, labels):
     # Defining the R script and loading the instance in Python
+    createFile(samples, labels)
     test()
 
     return 
@@ -92,7 +93,7 @@ def test():
 
     try: 
         p = subprocess.Popen([command, arg,
-                            "analysis/test.R"],
+                            "analysis/cqcluster/widest_within_cluster_gap.R"],
                             cwd = os.getcwd(),
                             stdin = subprocess.PIPE, 
                             stdout = subprocess.PIPE, 

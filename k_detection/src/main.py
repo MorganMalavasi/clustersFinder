@@ -109,6 +109,9 @@ internalAnalysis = internal_analysis()
 correctNumberOfClusters = max(labels) + 1
 
 
+
+
+
 '''
 print("**********************************************************************")
 print("****** silhouette index **********************************************")

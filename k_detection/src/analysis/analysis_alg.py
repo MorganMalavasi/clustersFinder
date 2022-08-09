@@ -250,5 +250,5 @@ class internal_analysis:
             self.kMeans_ = self.k_means_nrClusters(numberK = nr_clusters, samples = data)
         # compute silhoutte score 
         # score = minimum_spanning_tree(data, self.kMeans_.labels_)
-        wwcg(data, self.kMeans_.labels_, matrixOfDissimilarities)
+        wwcg(data, self.kMeans_.labels_)
         # print(score)
