@@ -5,7 +5,7 @@ from analysis.pearson import pearson_index
 from analysis.average_within_cluster_dissimilarities import average_within_cluster_dissimilarities
 from analysis.separation_index import separationindex
 from analysis.uniformity_of_cluster_size import entropy
-from analysis.widest_within_cluster_gap import minimum_spanning_tree, wwcg
+from analysis.widest_within_cluster_gap import minimum_spanning_tree_max_distance, widest_within_cluster_gap_formula
 from sklearn import metrics
 from sklearn.cluster import KMeans
 
@@ -245,10 +245,30 @@ class internal_analysis:
         print(score)
 
     # ************************* widest within cluster gap ********************
-    def k_means_wwcg_nrClusters_defined(self, nr_clusters, data, matrixOfDissimilarities):
+    def k_means_wwcg_nrClusters_defined(self, nr_clusters, data):
         if self.kMeans_ == None:
             self.kMeans_ = self.k_means_nrClusters(numberK = nr_clusters, samples = data)
         # compute silhoutte score 
         # score = minimum_spanning_tree(data, self.kMeans_.labels_)
-        wwcg(data, self.kMeans_.labels_)
-        # print(score)
+        score = widest_within_cluster_gap_formula(data, self.kMeans_.labels_)
+        print(score)
+
+    def k_means_wwcg(self, data):
+        minScore = (sys.maxsize)
+        clusters = -1
+        
+        if self.kMeans_list == None:
+            self.k_means_array(data)
+
+        for i in range(len(self.kMeans_list)):
+            score = widest_within_cluster_gap_formula(data, self.kMeans_list[i].labels_)
+        
+            if score < minScore:
+                minScore = score
+                clusters = max(self.kMeans_list[i].labels_) + 1
+        
+        print("score = {0}, nr clusters = {1}".format(minScore, clusters))
+                
+    def circleClustering_wwcg(self, data, labels_):
+        score = widest_within_cluster_gap_formula(data, labels_)
+        print(score)

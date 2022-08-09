@@ -16,7 +16,7 @@ PI = np.float32(PI)
 
 listOfDatasets = data_generation.createDatasets()
 
-dataset = listOfDatasets[0]
+dataset = listOfDatasets[3]
 samples, labels, n_dataset = dataset[0], dataset[1], dataset[2]
 
 
@@ -197,4 +197,8 @@ print("****** widest within-cluster gap *************************************")
 print("**********************************************************************")
 
 print("Computing widest within cluster gap in k-means knowing correct number of clusters")
-internalAnalysis.k_means_wwcg_nrClusters_defined(correctNumberOfClusters, samples, matrixOfWeights)
+internalAnalysis.k_means_wwcg_nrClusters_defined(correctNumberOfClusters, samples)
+print("Computing  widest within cluster gap in k-means without knowing correct number of clusters")
+internalAnalysis.k_means_wwcg(samples)
+print("Computing  widest within cluster gap in circleClustering")
+internalAnalysis.circleClustering_wwcg(samples, thetaLabels)

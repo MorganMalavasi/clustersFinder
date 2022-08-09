@@ -1,10 +1,8 @@
 import os
 import numpy as np
-import matplotlib.pyplot as plt
-from analysis.utils import clusterFinder, createFile
+from analysis.utils import clusterFinder, createFile, deleteFile
 from sklearn.metrics.pairwise import euclidean_distances
 import networkx as nx
-import pandas as pd
 import subprocess
 
 def average(list_):
@@ -13,7 +11,7 @@ def average(list_):
         sum += list_[i]
     return sum / len(list_)
 
-def minimum_spanning_tree(samples, labels):
+def minimum_spanning_tree_max_distance(samples, labels):
     
     averagePaths = []
 
@@ -79,14 +77,15 @@ def minimum_spanning_tree(samples, labels):
 
     return average(averagePaths)
 
-def wwcg(samples, labels):
+def widest_within_cluster_gap_formula(samples, labels):
     # Defining the R script and loading the instance in Python
     createFile(samples, labels)
-    test()
+    score = command()
+    deleteFile()        
 
-    return 
+    return score
 
-def test():
+def command():
     command = 'Rscript'
     # command = 'Rscript'                    # OR WITH bin FOLDER IN PATH ENV VAR 
     arg = '--vanilla' 
@@ -102,12 +101,13 @@ def test():
         output, error = p.communicate() 
 
         if p.returncode == 0: 
-            print('R OUTPUT:\n {0}'.format(output.decode("utf-8"))) 
-            print()
+            # print('R OUTPUT:\n {0}'.format(output.decode("utf-8"))) 
+            out = output.decode("utf-8")
+            out = out.replace('[1]', '')
+            return float(out)
         else: 
             print('R ERROR:\n {0}'.format(error.decode("utf-8"))) 
-
-        return True
+            return None
 
     except Exception as e: 
         print("dbc2csv - Error converting file: ") 
