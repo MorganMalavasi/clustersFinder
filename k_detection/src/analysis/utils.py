@@ -61,13 +61,10 @@ def printMatrix(samples, labels):
     return 
 
 def write_col_of_Data_frame(csvwriter, size):
-    myTuple = ()
+    myTuple = []
     for k in range(size):
-        # TODO -> bug, it trasforms the two digits numbers in just one digit number 
-        myTuple = myTuple + (str(k), ) 
-        # print(str(k))
-    print(myTuple)
-    x = "".join(myTuple)
-    print(x)
+        myTuple.append(str(k)) 
+        
+    # print(myTuple)
                 
-    csvwriter.writerow(x)
+    csvwriter.writerow(myTuple)

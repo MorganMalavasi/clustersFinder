@@ -145,18 +145,20 @@ print("Computing Dunn Index in k-means without knowing correct number of cluster
 internalAnalysis.k_means_dunn(samples)
 print("Computing Dunn Index in circleClustering")
 internalAnalysis.circleClustering_dunn(samples, thetaLabels)
+'''
 
 print("**********************************************************************")
 print("****** Pearson Index ****************************************************")
 print("**********************************************************************")
 
 print("Computing pearson Index in k-means knowing correct number of clusters")
-internalAnalysis.k_means_pearson_nrClusters_defined(correctNumberOfClusters, samples, matrixOfWeights)
+internalAnalysis.k_means_pearson_nrClusters_defined(correctNumberOfClusters, samples)
 print("Computing pearson Index in k-means without knowing correct number of clusters")
-internalAnalysis.k_means_pearson(samples, matrixOfWeights)
+internalAnalysis.k_means_pearson(samples)
 print("Computing pearson Index in circleClustering")
-internalAnalysis.circleClustering_pearson(samples, thetaLabels, matrixOfWeights)
+internalAnalysis.circleClustering_pearson(samples, thetaLabels)
 
+'''
 print("**********************************************************************")
 print("****** Average within-cluster dissimilarities ************************")
 print("**********************************************************************")
@@ -167,7 +169,9 @@ print("Computing Average within-cluster dissimilarities in k-means without knowi
 internalAnalysis.k_means_average_within_cluster_dissimilarities(samples)
 print("Computing Average within-cluster dissimilarities in circleClustering")
 internalAnalysis.circleClustering_average_within_cluster_dissimilarities(samples, thetaLabels)
+'''
 
+'''
 print("**********************************************************************")
 print("****** Separation Index **********************************************")
 print("**********************************************************************")
@@ -192,6 +196,8 @@ internalAnalysis.circleClustering_entropy(samples, thetaLabels)
 
 '''
 
+
+'''
 print("**********************************************************************")
 print("****** widest within-cluster gap *************************************")
 print("**********************************************************************")
@@ -202,3 +208,4 @@ print("Computing  widest within cluster gap in k-means without knowing correct n
 internalAnalysis.k_means_wwcg(samples)
 print("Computing  widest within cluster gap in circleClustering")
 internalAnalysis.circleClustering_wwcg(samples, thetaLabels)
+'''
