@@ -16,7 +16,7 @@ def outerPointsFromTheCluster(findMe, labels, data):
             outerPoints.append(data[j])
     return outerPoints
 
-def createFile(samples, labels):
+def createFile(samples, labels, cvnn = False, labels2 = None):
     
     path_to_file_samples = 'analysis/cqcluster/k_means_input.csv'
     
@@ -45,13 +45,26 @@ def createFile(samples, labels):
             
             row = [labels[i] + 1]
             csvwriter.writerow(row)
-    
 
+    if cvnn:
+        path_to_file_labels2 = 'analysis/cqcluster/labels_input_2.csv'
+
+        with open(path_to_file_labels2, "w") as csvfile:
+            csvwriter = csv.writer(csvfile)
+
+            for i in range(labels2.shape[0]):
+                if i == 0:
+                    size = 1
+                    write_col_of_Data_frame(csvwriter, size)
+                
+                row = [int(labels2[i]) + 1]
+                csvwriter.writerow(row)
     return 
 
 def deleteFile():
     os.remove("analysis/cqcluster/k_means_input.csv")
     os.remove("analysis/cqcluster/labels_input.csv")
+    os.remove("analysis/cqcluster/labels_input_2.csv")
     return 
 
 def printMatrix(samples, labels):

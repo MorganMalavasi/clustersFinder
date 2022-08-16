@@ -6,6 +6,8 @@ from analysis.average_within_cluster_dissimilarities import average_within_clust
 from analysis.separation_index import separationindex
 from analysis.uniformity_of_cluster_size import entropy
 from analysis.widest_within_cluster_gap import minimum_spanning_tree_max_distance, widest_within_cluster_gap_formula
+from analysis.prediction_strength import predictionStrength
+from analysis.nearest_neighbours import cvnn_formula
 from sklearn import metrics
 from sklearn.cluster import KMeans
 
@@ -130,6 +132,16 @@ class internal_analysis:
         score = dunn_fast(points = data, labels = labels_)
         print(score)
 
+    # ************************* clustering validity index based on Nearest Neighbours 
+    def k_means_cvnn_nrClusters_defined(self, nr_clusters, data, labelsTheta):
+        if self.kMeans_ == None:
+            self.kMeans_ = self.k_means_nrClusters(numberK = nr_clusters, samples = data)
+        # compute silhoutte score 
+        # score = minimum_spanning_tree(data, self.kMeans_.labels_)
+        scoreKmeans, scoreCircleClustering = cvnn_formula(data, self.kMeans_.labels_, labelsTheta)
+        print("score of kmeans = {0}".format(scoreKmeans))
+        print("score of circleClustering = {0}".format(scoreCircleClustering))
+
     # ************************* pearson index ************************************
     def k_means_pearson_nrClusters_defined(self, nr_clusters, data):
         if self.kMeans_ == None:
@@ -181,8 +193,6 @@ class internal_analysis:
                 clusters = max(self.kMeans_list[i].labels_) + 1
         
         print("score = {0}, nr clusters = {1}".format(maxScore, clusters))
-        
-        
                 
     def circleClustering_average_within_cluster_dissimilarities(self, data, labels_):
         score = average_within_cluster_dissimilarities(data, labels_)
@@ -272,3 +282,30 @@ class internal_analysis:
     def circleClustering_wwcg(self, data, labels_):
         score = widest_within_cluster_gap_formula(data, labels_)
         print(score)
+
+    # ************************* prediction strength ***************************
+    def k_means_predictionStrength_nrClusters_defined(self, nr_clusters, data):
+        score = predictionStrength(data, nr_clusters)
+        print(score)
+    '''
+    def k_means_predictionStrength(self, data):
+        minScore = (sys.maxsize)
+        clusters = -1
+        
+        if self.kMeans_list == None:
+            self.k_means_array(data)
+
+        for i in range(len(self.kMeans_list)):
+            score = predictionStrength(data, self.kMeans_list[i].labels_)
+        
+            if score < minScore:
+                minScore = score
+                clusters = max(self.kMeans_list[i].labels_) + 1
+        
+        print("score = {0}, nr clusters = {1}".format(minScore, clusters))
+                
+    def circleClustering_predictionStrength(self, data, labels_):
+        score = predictionStrength(data, labels_)
+        print(score)
+
+    '''
