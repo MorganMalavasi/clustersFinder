@@ -28,13 +28,13 @@ matrixOfWeights, S, C = cc.computing_weights(samples, theta)
 print("Computing the loop...")
 theta = cc.loop(matrixOfWeights, theta, S, C, 0.001)
 
-# data_plot.doPCA(samples, labels, n_dataset)
-# data_plot.plot_circle(theta, labels)
+data_plot.doPCA(samples, labels, n_dataset)
+data_plot.plot_circle(theta, labels)
 
 hist, bins = utility.histogram(theta, nbins=128)
 
 # Plot the histogram
-# data_plot.plot_scatter(hist, bins, mode=2)
+data_plot.plot_scatter(hist, bins, mode=2)
 # data_plot.plot_hist(hist, bins)
 # remove 10% of the noise in the data
 maxHeight = max(hist)
@@ -43,8 +43,8 @@ for i in range(hist.shape[0]):
     if hist[i] < maxHeight_5_percent:
         hist[i] = 0
 
-# data_plot.plot_scatter(hist, bins, mode=2)
-# data_plot.plot_hist(hist, bins)
+data_plot.plot_scatter(hist, bins, mode=2)
+data_plot.plot_hist(hist, bins)
 
 '''
 # smoothing 
@@ -58,8 +58,9 @@ data_plot.plot_hist(hist_smoothed_weighted, bins)
 # new algorithm for counting the number of clusters in an histogram of densities
 clusters = histogram_clustering_hierarchical.getClustersFromHistogram(hist, bins)
 thetaLabels = histogram_clustering_hierarchical.labelTheSamples(samples, theta, clusters, bins)
+centroids = histogram_clustering_hierarchical.centroidsFinder(samples, thetaLabels)
 
-# data_plot.plot_circle(theta, thetaLabels)
+data_plot.plot_circle(theta, thetaLabels)
 
 
 
@@ -145,7 +146,7 @@ print("Computing Dunn Index in k-means without knowing correct number of cluster
 internalAnalysis.k_means_dunn(samples)
 print("Computing Dunn Index in circleClustering")
 internalAnalysis.circleClustering_dunn(samples, thetaLabels)
-'''
+
 
 print("**********************************************************************")
 print("****** Pearson Index ****************************************************")
@@ -158,7 +159,7 @@ internalAnalysis.k_means_pearson(samples)
 print("Computing pearson Index in circleClustering")
 internalAnalysis.circleClustering_pearson(samples, thetaLabels)
 
-'''
+
 print("**********************************************************************")
 print("****** Average within-cluster dissimilarities ************************")
 print("**********************************************************************")

@@ -2,6 +2,7 @@ from random import sample
 import numpy as np
 from anytree import AnyNode
 from anytree.exporter import DotExporter
+from sklearn.neighbors._nearest_centroid import NearestCentroid
 import sys
 
 
@@ -67,6 +68,7 @@ def createHierarchicalTree(heights, nbins):
 
     listOfheightsToCheck = sorted(set(heights))
     # len(listOfheightsToCheck) 
+    lastHeight = 0.0
     for i in range(len(listOfheightsToCheck) ):
         if listOfheightsToCheck[i] != 0.0:
             checkHeight = listOfheightsToCheck[i]
@@ -81,11 +83,12 @@ def createHierarchicalTree(heights, nbins):
                         end = j
                     # add a new node
                     interval = (start, end)
-                    # TODO -> the height is not correct, because is total and we need the cut 
-                    area = (end - start) * listOfheightsToCheck[i]
+                    
+                    area = (end - start) * (listOfheightsToCheck[i] - lastHeight)
                     addToParent(parents, interval, area, nbins.shape[0])
                 else: 
                     j = j+1
+            lastHeight = listOfheightsToCheck[i]
 
     return tree
 
@@ -229,6 +232,11 @@ def labelTheSamples(samples, theta, clusters, bins):
         label[i] = labelFound
         
     return label
+
+def centroidsFinder(samples, labels):
+    clf = NearestCentroid().fit(samples, labels)
+    return clf.centroids_
+
 
 '''
 def searchClusters(tree):
