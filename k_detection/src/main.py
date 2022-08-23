@@ -1,5 +1,4 @@
 import numpy as np
-import numpy as np
 import matplotlib.pyplot as plt
 import cclustering_cpu as cc
 import data_generation
@@ -222,8 +221,3 @@ print("**********************************************************************")
 
 print("Computing cvnn in k-means knowing correct number of clusters")
 internalAnalysis.k_means_cvnn_nrClusters_defined(correctNumberOfClusters, samples, thetaLabels)
-
-# print("Computing cvnn in k-means without knowing correct number of clusters")
-# internalAnalysis.k_means_cvnn(samples)
-# print("Computing cvnn in circleClustering")
-# internalAnalysis.circleClustering_cvnn(samples, thetaLabels)
