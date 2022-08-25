@@ -19,7 +19,8 @@ def average_within_cluster_dissimilarities(data, labels):
 
         matrixOfDistances = euclidean_distances(cluster_array, cluster_array)
         sumDissimilarities = sumDiss(matrixOfDistances)
-        sumDissimilarities = sumDissimilarities / (cluster_array.shape[0] - 1)
+        if (cluster_array.shape[0] > 1):
+            sumDissimilarities = sumDissimilarities / (cluster_array.shape[0] - 1)
 
         total += sumDissimilarities
     

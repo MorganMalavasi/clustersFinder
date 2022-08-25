@@ -8,16 +8,16 @@ import sys
 
 def getClustersFromHistogram(heights, nbins):
     # start alg
-    print(" - create hierarchical tree")
+    # print(" - create hierarchical tree")
     tree = createHierarchicalTree(heights, nbins)
-    print(" - creation of the file tree.png with the tree")
+    # print(" - creation of the file tree.png with the tree")
     
     # print the tree in tree.png
-    DotExporter(tree).to_picture("tree.png")
+    # DotExporter(tree).to_picture("tree.png")
 
     detectClusters(tree)        
     newTree = createTreeOfClusters(tree, nbins.shape[0]-1)
-    DotExporter(newTree).to_picture("clusters.png")
+    # DotExporter(newTree).to_picture("clusters.png")
     
     # each cluster is a tuple that indicates the number of the cluster and the interval of membership
     clusters = searchClusters(newTree)

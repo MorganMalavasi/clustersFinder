@@ -62,9 +62,12 @@ def createFile(samples, labels, cvnn = False, labels2 = None):
     return 
 
 def deleteFile():
-    os.remove("analysis/cqcluster/k_means_input.csv")
-    os.remove("analysis/cqcluster/labels_input.csv")
-    os.remove("analysis/cqcluster/labels_input_2.csv")
+    if os.path.exists("analysis/cqcluster/k_means_input.csv"):
+        os.remove("analysis/cqcluster/k_means_input.csv")
+    if os.path.exists("analysis/cqcluster/labels_input.csv"):
+        os.remove("analysis/cqcluster/labels_input.csv")
+    if os.path.exists("analysis/cqcluster/labels_input_2.csv"):
+        os.remove("analysis/cqcluster/labels_input_2.csv")
     return 
 
 def printMatrix(samples, labels):

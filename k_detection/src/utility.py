@@ -10,3 +10,6 @@ def histogram(theta, nbins=None, verb=True):
     bins = np.linspace(0,2*np.pi,nbins)
     h, b = np.histogram(theta, bins)
     return h, b
+
+def averageOfList(lst):
+    return sum(lst) / len(lst)

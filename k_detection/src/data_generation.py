@@ -53,7 +53,8 @@ def create_dataset_olivetti_faces(display = False, n_dataset = 0, standard = Tru
     return X, l, n_dataset
 
 
-def createDatasets():
+def createDatasets(key = None):
+    '''
     sample0, l0, n_dataset0 = create_dataset_base(samples = 20, features = 5, centers = 3, display = False, n_dataset = 0)
     sample1, l1, n_dataset1 = create_dataset_base(samples = 1000, features = 5, centers = 5, display = False, n_dataset = 1)
     sample2, l2, n_dataset2 = create_dataset_base(samples = 4000, features = 7, centers = 10, display = False, n_dataset = 2)
@@ -67,9 +68,9 @@ def createDatasets():
     sample10, l10, n_dataset10 = create_dataset_circles(samples = 1000, noise = 0.05, display = False, n_dataset = 10)
     sample11, l11, n_dataset11 = create_dataset_classification(n_samples = 100, n_features = 2, n_redundant = 0, n_informative = 2, n_clustes_per_class=1, display = False, n_dataset = 11)
     sample12, l12, n_dataset12 = create_dataset_classification(n_samples = 1000, n_features = 2, n_redundant = 0, n_informative = 2, n_clustes_per_class=1, display = False, n_dataset = 12)
-    sample12, l12, n_dataset12 = create_dataset_classification(n_samples = 5000, n_features = 8, n_redundant = 0, n_informative = 2, n_clustes_per_class=1, display = False, n_dataset = 13)
-    sample13, l13, n_dataset13 = create_dataset_olivetti_faces(display = False, n_dataset = 14)
-    # sample14, l14, n_dataset14 = create_dataset_base(samples = 50000, features = 2048, centers = 10, display = False, n_dataset = 14)
+    sample13, l13, n_dataset13 = create_dataset_classification(n_samples = 5000, n_features = 8, n_redundant = 0, n_informative = 2, n_clustes_per_class=1, display = False, n_dataset = 13)
+    sample14, l14, n_dataset14 = create_dataset_olivetti_faces(display = False, n_dataset = 14)
+    # sample15, l15, n_dataset15 = create_dataset_base(samples = 50000, features = 2048, centers = 10, display = False, n_dataset = 15)
 
     listOfDataset = []
 
@@ -87,6 +88,16 @@ def createDatasets():
     listOfDataset.append((sample11, l11, n_dataset11))
     listOfDataset.append((sample12, l12, n_dataset12))
     listOfDataset.append((sample13, l13, n_dataset13))
-    # listOfDataset.append((sample14, l14, n_dataset14))
+    listOfDataset.append((sample14, l14, n_dataset14))
+    '''
 
-    return listOfDataset
+    switcher = {
+        0 : create_dataset_base(samples = 500, features = 2, centers = 3, display = False, n_dataset = 0),
+        1 : create_dataset_base(samples = 800, features = 10, centers = 4, display = False, n_dataset = 1),
+        2 : create_dataset_base(samples = 1000, features = 6, centers = 6, standard_deviation_cluster=2.0, display = False, n_dataset = 2),
+        3 : create_dataset_classification(n_samples = 500, n_features = 3, n_redundant = 0, n_informative = 2, n_clustes_per_class=1, display = False, n_dataset = 3),
+        4 : create_dataset_circles(samples = 1000, noise = 0.05, display = False, n_dataset = 4),
+        5 : create_dataset_moon(samples = 1000, noise = 0.05, display = False, n_dataset = 5) 
+    }
+
+    return switcher.get(key, "Invalid Input")
