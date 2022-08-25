@@ -251,7 +251,7 @@ for x in range(0, M):
     cvnnKmeans = []
 
     # circle clustering
-    silhoutteCircleClustering = []
+    silhoutteCircleClustering = [] 
     calinski_harabaszCircleClustering = []
     dunnCircleClustering = []
     pearsonCircleClustering = []
