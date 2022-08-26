@@ -6,7 +6,7 @@ def cvnn_formula(samples, labels, labelsTheta):
     # Defining the R script and loading the instance in Python
     createFile(samples, labels, cvnn = True, labels2 = labelsTheta)
     score = command()
-    deleteFile()        
+    # deleteFile()        
 
     return score
 
