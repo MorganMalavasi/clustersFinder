@@ -9,6 +9,7 @@ from analysis.analysis_alg import internal_analysis
 from utility import averageOfList
 from rich.console import Console
 from rich.table import Table
+from tqdm import tqdm
 from multiprocessing import Process
 
 os.environ["KMP_WARNINGS"] = "FALSE" 
@@ -21,7 +22,7 @@ PI = np.pi
 PI = np.float32(PI)
 
 M = 6   # number of datasets
-N = 20  # number of times for repeating our analysis
+N = 3  # number of times for repeating our analysis
 
 
 if __name__ == '__main__':  # TODO -> render multiprocess 
@@ -58,13 +59,13 @@ if __name__ == '__main__':  # TODO -> render multiprocess
         table.add_column("kmeans",style="magenta", no_wrap=True)
         table.add_column("circleClustering",style="green", no_wrap=True)
 
-        for j in range(0, N):
+        for j in tqdm(range(0, N), desc="computing"):
             
             dataset = data_generation.createDatasets(x)
             samples, labels, n_dataset = dataset[0], dataset[1], dataset[2]
             
-            if j == 0:
-                console.print("samples = {0}, centroids = {1}".format(samples.shape[0], max(labels) + 1), )
+            #  if j == 0:
+                # console.print("samples = {0}, centroids = {1}".format(samples.shape[0], max(labels) + 1), )
             
             with console.status("[bold green]Computing indexes loop {0}...".format(j+1)) as status:
                 
@@ -247,7 +248,7 @@ if __name__ == '__main__':  # TODO -> render multiprocess
                 cvnnKmeans.append(score_cvnn_kmeans)
                 cvnnCircleClustering.append(score_cvnn_circleClustering)
 
-                console.log(f"[green]Finish computing data loop = [/green] {j+1}")
+                # console.log(f"[green]Finish computing data loop = [/green] {j+1}")
 
         '''
         # kmeans
