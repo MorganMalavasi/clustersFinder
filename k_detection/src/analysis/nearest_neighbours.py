@@ -5,10 +5,10 @@ from analysis.utils import createFile, deleteFile
 def cvnn_formula(samples, labels, labelsTheta):
     # Defining the R script and loading the instance in Python
     createFile(samples, labels, cvnn = True, labels2 = labelsTheta)
-    score = command()
-    # deleteFile()        
-
-    return score
+    score1, score2 = command()
+    deleteFile()        
+    
+    return score1, score2 
 
 def command():
     command = 'Rscript'
@@ -31,7 +31,7 @@ def command():
             lines = out.split('\n')
             line = lines[1].replace('[1]', '')
             res = line.split()
-            return (float(res[0]), float(res[1]))
+            return float(res[0]), float(res[1])
         else: 
             print('R ERROR:\n {0}'.format(error.decode("utf-8"))) 
             return None
