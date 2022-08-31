@@ -1,11 +1,15 @@
 import numpy as np
-from sklearn.metrics.pairwise import euclidean_distances
+from sklearn.metrics.pairwise import euclidean_distances, cosine_distances
 from numpy import linalg
 from numba import jit
 
 
-def computing_weights(dataset, theta):
-    weights = euclidean_distances(dataset, dataset)
+def computing_weights(dataset, theta, cosine = False):
+    if cosine == False:
+        weights = euclidean_distances(dataset, dataset)
+    else :
+        weights = cosine_distances(dataset, dataset)
+    
     weights = weights / linalg.norm(weights)
 
     S, C = C_S(weights, theta)
