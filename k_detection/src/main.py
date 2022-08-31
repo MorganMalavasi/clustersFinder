@@ -124,7 +124,8 @@ if __name__ == '__main__':  # TODO -> render multiprocess
                     matrixOfWeights, S, C = cc.computing_weights(samples, theta, cosine = cosine)
                     theta = cc.loop(matrixOfWeights, theta, S, C, 0.001)
 
-                    # data_plot.doPCA(samples, labels, n_dataset)
+                    if l == 0 and j == 0:
+                        data_plot.doPCA(samples, labels, n_dataset)
                     # data_plot.plot_circle(theta)
                     hist, bins = utility.histogram(theta, nbins=128)
                     # Plot the histogram
